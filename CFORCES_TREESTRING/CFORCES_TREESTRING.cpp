@@ -7,6 +7,14 @@
  #include <set>
 using namespace std;
 
+string K; //pattern
+vector<int> T;
+int sp = 0;
+int kp = 0;
+string S;
+
+
+
 
 int answer = 0;
 struct Node{
@@ -76,16 +84,14 @@ int main()
         nodes[i].s = new_s;
     }
 
-    string pattern;
-    cin >> pattern;
+    //string pattern;
+    cin >> K;
 
     string S = "";
-    vector<int> T(pattern.size() +1 ,-1);
-    preKMP(pattern,T);
-    int sp = 0;
-    int kp = 0;
-    KMPdfs(1,S,pattern,T,sp,kp);
+    vector<int> T(K.size() +1 ,-1);
+    preKMP(K,T);
+    KMPdfs(1,S,K,T,sp,kp);
     cout << answer << endl; 
-    
+
     return 0;
 }
