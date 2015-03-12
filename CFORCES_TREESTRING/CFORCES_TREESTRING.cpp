@@ -1,30 +1,25 @@
- /*
- * C++ Program to Implement Knuth–Morris–Pratt Algorithm (KMP)
- */
 #include <iostream>
 #include <string>
 #include <vector>
- #include <set>
+#include <set>
 using namespace std;
+
+#define MAX 100000
 
 string K; //pattern
 vector<int> T;
 int sp = 0;
 int kp = 0;
 string S;
-
-
-
-
+int n;
 int answer = 0;
 struct Node{
-    int name;
     string s;
     vector<int> sub_nodes;
 };
 
-int MAX = 100001;
-vector<Node> nodes(100001);
+
+vector<Node> nodes(MAX);
 
 
 
@@ -56,21 +51,18 @@ void KMPdfs(int x, vector<int> &T,int sp,int kp){
         if(kp == K.size()) ++matches;
     }
     answer += matches;
-    if(nodes[x].sub_nodes.empty()){
-        S = S.substr(0,S.size()-nodes[x].s.size()); 
-        return;
-    }
     for (int i = 0; i < nodes[x].sub_nodes.size(); ++i)
     {
         KMPdfs(nodes[x].sub_nodes[i],T,sp ,kp);
+    }if(n != MAX){
+        S = S.substr(0,S.size()-nodes[x].s.size());
     }
-    S = S.substr(0,S.size()-nodes[x].s.size());
  }
 int main()
 {
     cin.sync_with_stdio(false);
 
-    int n;
+    //int n;
     cin >> n;
     Node root;
     root.s = "";
@@ -89,7 +81,6 @@ int main()
     //string pattern;
     cin >> K;
 
-    //string S = "";
     vector<int> T(K.size() +1 ,-1);
     preKMP(K,T);
     KMPdfs(1,T,sp,kp);
