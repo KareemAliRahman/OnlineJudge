@@ -43,8 +43,9 @@ void preKMP(string K, vector<int> &T){
     return;
 }
 
+
 //S is the string so far, K is the pattern string
-void KMPdfs(int x,string S, string K, vector<int> &T,int sp,int kp){
+void KMPdfs(int x, vector<int> &T,int sp,int kp){
     S += nodes[x].s;
     int matches = 0;
     while(sp < S.size())
@@ -56,13 +57,14 @@ void KMPdfs(int x,string S, string K, vector<int> &T,int sp,int kp){
     }
     answer += matches;
     if(nodes[x].sub_nodes.empty()){
+        S = S.substr(0,S.size()-nodes[x].s.size()); 
         return;
     }
     for (int i = 0; i < nodes[x].sub_nodes.size(); ++i)
     {
-        KMPdfs(nodes[x].sub_nodes[i],S, K,T,sp ,kp);
+        KMPdfs(nodes[x].sub_nodes[i],T,sp ,kp);
     }
-
+    S = S.substr(0,S.size()-nodes[x].s.size());
  }
 int main()
 {
@@ -87,10 +89,10 @@ int main()
     //string pattern;
     cin >> K;
 
-    string S = "";
+    //string S = "";
     vector<int> T(K.size() +1 ,-1);
     preKMP(K,T);
-    KMPdfs(1,S,K,T,sp,kp);
+    KMPdfs(1,T,sp,kp);
     cout << answer << endl; 
 
     return 0;
